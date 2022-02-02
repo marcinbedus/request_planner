@@ -12,7 +12,6 @@ class QueueHandler {
         this.channel = channel;
 
         channel.consume("responses", (msg) => {
-          console.log("consuming messages");
           if (!msg) return;
 
           ResponseHandler.onResponse(msg, channel).catch((e) =>
