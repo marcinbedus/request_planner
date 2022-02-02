@@ -1,0 +1,100 @@
+version: "3.8"
+
+services:
+  users:
+    build:
+      context: ./users
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./users:/home/node/users
+    container_name: users
+    expose:
+      - "3001"
+    ports:
+      - "3001:3001"
+    command: npm run dev
+    depends_on:
+      - postgresdb
+    networks:
+      - default
+    env_file:
+      - ./env/users.env
+
+  requests:
+    build:
+      context: ./requests
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./requests:/home/node/requests
+    container_name: requests
+    expose:
+      - "3002"
+    ports:
+      - "3002:3002"
+    command: sh -c '/bin/wait-for-it.sh rabbitmq:5672 --timeout=30 -- npm run dev'
+    depends_on:
+      - postgresdb
+      - rabbitmq
+    networks:
+      - default
+    env_file:
+      - ./env/requests.env
+
+  auto_request:
+    build:
+      context: ./auto_request
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./auto_request:/home/node/auto_request
+    container_name: auto_request
+    depends_on:
+      - requests
+    env_file:
+      - ./env/auto_request.env
+    command: sh -c '/bin/wait-for-it.sh rabbitmq:5672 --timeout=30 -- npm run dev'
+    networks:
+      - default
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./client/:/home/react/app
+    container_name: client
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
+    command: yarn start
+    links:
+      - "users"
+
+  postgresdb:
+    image: postgres:14.1-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db_persdata:/var/lib/postgrespers
+    ports:
+      - "5432:5432"
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: "rabbitmq"
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  db_persdata: {}

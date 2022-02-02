@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["linux-arm64-openssl-1.1.x", "darwin-arm64"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Request {
+  id       String  @id @default(uuid())
+  url      String
+  method   String
+  headers  Json
+  body     Json
+  userId   String
+  finished Boolean @default(false)
+  type     String // "once" / "daily" / "weekly" / "monthly"
+
+  execOptions ExecOption[]
+  lastResponses Response[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ExecOption {
+  id   String    @id @default(uuid())
+  date DateTime? // once
+
+
+  // repeatable
+  day  Int? // 1
+  hour String? // 18:30
+
+
+  request   Request @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  requestId String
+}
+
+model Response {
+  id String @id @default(uuid())  
+  status Int?
+  data Json
+
+  request   Request @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  requestId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

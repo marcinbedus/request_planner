@@ -1,0 +1,72 @@
+version: "3.8"
+
+services:
+  users:
+    build:
+      context: ./users
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    networks:
+      - default
+    env_file:
+      - ./env/users.env
+    command: sh -c '/bin/wait-for-it.sh postgresdb:5432 --timeout=30 -- npm run start'
+
+  requests:
+    build:
+      context: ./requests
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    networks:
+      - default
+    env_file:
+      - ./env/requests.env
+    command: sh -c '/bin/wait-for-it.sh rabbitmq:5672 --timeout=30 -- npm run start'
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    networks:
+      - default
+
+  auto_request:
+    build:
+      context: ./auto_request
+      dockerfile: Dockerfile
+    container_name: auto_request
+    command: sh -c '/bin/wait-for-it.sh rabbitmq:5672 --timeout=30 -- npm run start'
+    networks:
+      - default
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: "rabbitmq"
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    env_file:
+      - ./env/rabbitmq.env
+
+  postgresdb:
+    image: postgres:14.1-alpine
+    env_file:
+      - ./env/db.env
+    volumes:
+      - db_persdata:/var/lib/postgrespers
+    ports:
+      - "5432:5432"
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  db_persdata: {}
