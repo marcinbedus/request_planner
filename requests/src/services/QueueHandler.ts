@@ -12,6 +12,7 @@ class QueueHandler {
         this.channel = channel;
 
         channel.consume("responses", (msg) => {
+          console.log("consuming messages");
           if (!msg) return;
 
           ResponseHandler.onResponse(msg, channel).catch((e) =>
@@ -19,7 +20,9 @@ class QueueHandler {
           );
         });
       })
-      .catch((e) => Sentry.captureException(e));
+      .catch((e) => {
+        Sentry.captureException(e);
+      });
   }
 
   public sendRequestsToQueue = (requests: Request[]) => {

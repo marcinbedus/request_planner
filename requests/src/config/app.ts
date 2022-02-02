@@ -7,6 +7,7 @@ import { NotFoundError } from "../utils/errors/NotFoundError";
 
 import * as Sentry from "@sentry/node";
 import "./sentry";
+import "../services/QueueHandler";
 
 class App {
   public app: Application;

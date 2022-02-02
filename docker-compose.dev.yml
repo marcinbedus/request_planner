@@ -91,6 +91,8 @@ services:
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
       - default
+    env_file:
+      - ./env/rabbitmq.env
 
 networks:
   default:

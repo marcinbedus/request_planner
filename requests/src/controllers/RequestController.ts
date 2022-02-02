@@ -93,7 +93,6 @@ class RequestController {
         data: request,
       });
     } catch (e: any) {
-      console.log(e);
       throw new InternalServerError(e);
     }
   };
@@ -101,7 +100,6 @@ class RequestController {
   public checkRequestsToPerform = async (req: Request, res: Response) => {
     try {
       const toPerform = await RequestService.getRequestsToPerform();
-      console.log(toPerform);
       if (toPerform.length) {
         QueueHandler.sendRequestsToQueue(toPerform);
       }

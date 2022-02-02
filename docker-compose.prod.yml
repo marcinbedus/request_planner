@@ -42,6 +42,8 @@ services:
     command: sh -c '/bin/wait-for-it.sh rabbitmq:5672 --timeout=30 -- npm run start'
     networks:
       - default
+    env_file:
+      - ./env/auto_request.env
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
@@ -54,6 +56,8 @@ services:
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     env_file:
       - ./env/rabbitmq.env
+    networks:
+      - default
 
   postgresdb:
     image: postgres:14.1-alpine
@@ -63,6 +67,8 @@ services:
       - db_persdata:/var/lib/postgrespers
     ports:
       - "5432:5432"
+    networks:
+      - default
 
 networks:
   default:

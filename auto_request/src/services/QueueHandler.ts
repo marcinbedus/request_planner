@@ -20,7 +20,7 @@ class QueueHandler {
   }
 
   private setup = async () => {
-    const connection = await connect("amqp://guest:guest@rabbitmq:5672");
+    const connection = await connect(process.env.QUEUE_URL as string);
 
     const channel = await connection.createChannel();
     await channel.assertQueue("requests");
