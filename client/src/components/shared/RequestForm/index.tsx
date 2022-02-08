@@ -20,14 +20,14 @@ export const RequestForm: React.FC<RequestFormProps> = ({
   onSubmit,
   initialValues,
 }) => {
-  const { validationSchema } = useRequestFormLogic();
+  const { baseValidationSchema } = useRequestFormLogic();
 
   return (
     <Container className="mt-4 mw-50" fluid="sm">
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit}
-        validationSchema={validationSchema}
+        validationSchema={baseValidationSchema}
         enableReinitialize
       >
         {({ handleSubmit }) => {

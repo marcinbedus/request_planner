@@ -8,8 +8,8 @@ interface DailyTimeProps {
 export const DailyTime: React.FC<DailyTimeProps> = ({ execOptions }) => {
   return (
     <>
-      {execOptions.map((option: any) => (
-        <p>{option.hour}</p>
+      {execOptions.map((option, index) => (
+        <p key={index}>{option.hour}</p>
       ))}
     </>
   );

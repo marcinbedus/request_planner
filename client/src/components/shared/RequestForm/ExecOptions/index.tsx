@@ -47,7 +47,7 @@ export const ExecOptions: React.FC = () => {
           </Row>
         </Container>
         <Card.Title></Card.Title>
-        <Card.Text>{renderOptions()}</Card.Text>
+        <Card.Text as="div">{renderOptions()}</Card.Text>
       </Card.Body>
     </Card>
   );

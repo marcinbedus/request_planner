@@ -1,4 +1,4 @@
-import { Field, FieldArray, useFormikContext } from "formik";
+import { FieldArray, useFormikContext } from "formik";
 import React from "react";
 import { Button, Form } from "react-bootstrap";
 import TimePicker from "react-time-picker";
@@ -26,7 +26,9 @@ export const Monthly = () => {
                 }}
               >
                 {Array.from({ length: 31 }).map((_, index) => (
-                  <option value={index + 1}>{index + 1}</option>
+                  <option key={index} value={index + 1}>
+                    {index + 1}
+                  </option>
                 ))}
               </Form.Select>
 

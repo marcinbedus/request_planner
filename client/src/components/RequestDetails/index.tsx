@@ -16,7 +16,7 @@ export const RequestDetails = () => {
         <Container className="mt-5 ">
           <Card>
             <Card.Title className="align-items-center m-2 d-flex justify-content-between">
-              <h4 className="m-1">Last execution details:</h4>
+              <h4 className="m-1">Request details:</h4>
               <div>
                 <Button
                   onClick={() => navigate(`/edit-request/${request.id}`)}
@@ -54,7 +54,7 @@ export const RequestDetails = () => {
               {request.lastResponses[0] ? (
                 <>
                   <div>
-                    <h5>Response data:</h5>
+                    <h5>Last execution data:</h5>
                     <JSONTree
                       theme={JSONTreeTheme}
                       data={request.lastResponses[0].data}

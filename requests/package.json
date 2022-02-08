@@ -7,7 +7,7 @@
     "dev": "nodemon --config nodemon.json src/index.ts",
     "migrate": "dotenv -e .env.dev -- npx prisma migrate dev --name postgres-init",
     "build": "tsc",
-    "start": "dotenv -e .env.dev -- npx prisma migrate deploy && node index.js"
+    "start": "dotenv -e .env.local -- npx prisma migrate deploy && node index.js"
   },
   "keywords": [],
   "author": "",

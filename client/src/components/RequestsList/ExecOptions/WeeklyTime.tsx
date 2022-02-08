@@ -9,8 +9,8 @@ interface WeeklyTimeProps {
 export const WeeklyTime: React.FC<WeeklyTimeProps> = ({ execOptions }) => {
   return (
     <>
-      {execOptions.map((option: any) => (
-        <p>
+      {execOptions.map((option, index) => (
+        <p key={index}>
           {dayNames[option.day]}: {option.hour}
         </p>
       ))}

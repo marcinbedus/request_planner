@@ -18,7 +18,7 @@ services:
     networks:
       - default
     env_file:
-      - ./env/users.env
+      - ./env/dev/users.env
 
   requests:
     build:
@@ -38,7 +38,7 @@ services:
     networks:
       - default
     env_file:
-      - ./env/requests.env
+      - ./env/dev/requests.env
 
   auto_request:
     build:
@@ -50,7 +50,7 @@ services:
     depends_on:
       - requests
     env_file:
-      - ./env/auto_request.env
+      - ./env/dev/auto_request.env
     command: sh -c '/bin/wait-for-it.sh rabbitmq:5672 --timeout=30 -- npm run dev'
     networks:
       - default
@@ -72,13 +72,12 @@ services:
 
   postgresdb:
     image: postgres:14.1-alpine
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
     volumes:
-      - db_persdata:/var/lib/postgrespers
+      - db_persdev:/var/lib/postgrespers
     ports:
       - "5432:5432"
+    env_file:
+      - ./env/dev/db.env
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
@@ -91,12 +90,10 @@ services:
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
       - default
-    env_file:
-      - ./env/rabbitmq.env
 
 networks:
   default:
     driver: bridge
 
 volumes:
-  db_persdata: {}
+  db_persdev: {}

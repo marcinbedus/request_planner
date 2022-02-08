@@ -7,10 +7,12 @@ export const Once = () => {
   const { values, setFieldValue } = useFormikContext<CreateRequestValuesOnce>();
 
   return (
-    <DateTimePicker
-      className="m-2"
-      value={new Date(values.execOptions[0].date)}
-      onChange={(date) => setFieldValue("execOptions[0].date", date)}
-    />
+    <>
+      <DateTimePicker
+        className="m-2"
+        value={new Date(values.execOptions[0].date)}
+        onChange={(date) => setFieldValue("execOptions[0].date", date)}
+      />
+    </>
   );
 };

@@ -13,23 +13,25 @@ export const Daily = () => {
       {({ push, remove }) => (
         <>
           {values.execOptions.map((option, index) => (
-            <div className="d-flex align-items-center">
-              <TimePicker
-                onChange={(value) =>
-                  setFieldValue(`execOptions[${index}]`, { hour: value })
-                }
-                value={option.hour}
-              />
-              {values.execOptions.length > 1 ? (
-                <Button
-                  variant="outline-danger m-2"
-                  size="sm"
-                  onClick={() => remove(index)}
-                >
-                  x
-                </Button>
-              ) : null}
-            </div>
+            <React.Fragment key={index}>
+              <div className="d-flex align-items-center">
+                <TimePicker
+                  onChange={(value) =>
+                    setFieldValue(`execOptions[${index}]`, { hour: value })
+                  }
+                  value={option.hour}
+                />
+                {values.execOptions.length > 1 ? (
+                  <Button
+                    variant="outline-danger m-2"
+                    size="sm"
+                    onClick={() => remove(index)}
+                  >
+                    x
+                  </Button>
+                ) : null}
+              </div>
+            </React.Fragment>
           ))}
           <Button
             variant="outline-success"

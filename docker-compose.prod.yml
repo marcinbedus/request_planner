@@ -64,7 +64,7 @@ services:
     env_file:
       - ./env/db.env
     volumes:
-      - db_persdata:/var/lib/postgrespers
+      - db_persprod:/var/lib/postgrespers
     ports:
       - "5432:5432"
     networks:
@@ -75,4 +75,4 @@ networks:
     driver: bridge
 
 volumes:
-  db_persdata: {}
+  db_persprod: {}

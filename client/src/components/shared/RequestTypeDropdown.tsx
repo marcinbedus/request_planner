@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import { RequestType } from "../../typings/app";
 
@@ -15,8 +15,9 @@ export const RequestTypeDropdown: React.FC<CustomDropdownProps> = ({
 
   return (
     <DropdownButton variant="second" size="sm" title={value}>
-      {options.map((option) => (
+      {options.map((option, index) => (
         <Dropdown.Item
+          key={index}
           as="button"
           onClick={(e) => {
             e.preventDefault();

@@ -8,8 +8,8 @@ interface MonthlyTimeProps {
 export const MonthlyTime: React.FC<MonthlyTimeProps> = ({ execOptions }) => {
   return (
     <>
-      {execOptions.map((option: any) => (
-        <p>
+      {execOptions.map((option, index) => (
+        <p key={index}>
           {option.day}: {option.hour}
         </p>
       ))}

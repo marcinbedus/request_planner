@@ -17,7 +17,7 @@ export const useRequestDetailsLogic = () => {
   useEffect(() => {
     if (!id) return;
 
-    RequestService.get(id, { responseCount: 1, responseOrder: "asc" })
+    RequestService.get(id, { responseCount: 1, responseOrder: "desc" })
       .then((r) => {
         setRequest(r.data.data);
       })

@@ -30,15 +30,19 @@ export const Data = () => {
         <Form.Label>headers: </Form.Label>
         <FieldArray name="headers">
           {({ push, remove }) => (
-            <div className="flex column">
+            <div>
               {values.headers.map((_, index) => (
-                <div className="flex">
-                  <Field placeholder="key" name={`headers[${index}].key`} />
-                  <Field
-                    className="m-1"
-                    placeholder="value"
-                    name={`headers[${index}].value`}
-                  />
+                <div key={index} className="d-flex align-items-center">
+                  <div>
+                    <Field placeholder="key" name={`headers[${index}].key`} />
+                  </div>
+                  <div>
+                    <Field
+                      className="m-1"
+                      placeholder="value"
+                      name={`headers[${index}].value`}
+                    />
+                  </div>
                   <Button
                     size="sm"
                     variant="outline-danger"

@@ -19,6 +19,7 @@ export const useEditRequestLogic = () => {
 
     RequestService.get(id)
       .then((r) => {
+        console.log(FormHelper.prepareApiRequestToEdit(r.data.data));
         setInitialValues(FormHelper.prepareApiRequestToEdit(r.data.data));
       })
       .catch((e) =>
