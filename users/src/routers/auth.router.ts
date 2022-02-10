@@ -9,7 +9,6 @@ router
   .get(
     "/github",
     passport.authenticate("github", {
-      failureRedirect: "",
       scope: ["profile"],
       session: false,
     })
@@ -18,6 +17,7 @@ router
     "/callback/github",
     passport.authenticate("github", {
       session: false,
+      failureRedirect: `${process.env.CLIENT_URL}/login/error`,
     }),
     AuthController.redirectAfterLoginSuccess
   )

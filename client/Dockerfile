@@ -1,4 +1,4 @@
-FROM node:16-alpine3.13 as client-build
+FROM node:14-alpine3.13 as client-build
 
 WORKDIR  /home/react/app
 

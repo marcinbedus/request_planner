@@ -15,7 +15,7 @@ export const authenticate = (
 ) => {
   const token = req.cookies["auth"] as string;
 
-  if (!token) return res.status(403);
+  if (!token) return res.sendStatus(403);
 
   const decoded = jwt.verify(
     token,

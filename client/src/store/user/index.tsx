@@ -1,11 +1,10 @@
 import { AxiosResponse } from "axios";
 import React, { createContext, useContext, useEffect, useReducer } from "react";
 import { axiosInstance } from "../../utils/axios";
-import { useModalContext } from "../modal";
 import { loginUser, logoutUser } from "./actions";
+import { IUser } from "./index.d";
 import { userReducer } from "./reducer";
 import { initialUserState } from "./state";
-import { IUser } from "./index.d";
 
 export const UserContext = createContext({
   state: initialUserState,
@@ -17,9 +16,6 @@ export const UserContext = createContext({
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(userReducer, initialUserState);
-  const {
-    actions: { openModal },
-  } = useModalContext();
 
   useEffect(() => {
     axiosInstance
@@ -27,17 +23,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         withCredentials: true,
       })
       .then((response: AxiosResponse) => {
-        if (response.data) {
-          dispatch({
-            type: "login_user",
-            payload: { username: response.data.username },
-          });
-        } else {
-          openModal({ message: "something went wrong, try again later" });
-        }
+        dispatch({
+          type: "login_user",
+          payload: { username: response.data.username },
+        });
       })
       .catch((e) => {
-        openModal({ message: "something went wrong, try again later" });
+        console.log(e);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

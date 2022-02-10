@@ -19,21 +19,17 @@ export const RequestsList = () => {
       <Table responsive>
         <thead>
           <tr>
-            <th>url</th>
-            <th>body</th>
-            <th>headers</th>
             <th>method</th>
+            <th>url</th>
             <th>time</th>
-            <th></th>
+            <th>details</th>
           </tr>
         </thead>
         <tbody>
           {requests.map((request) => (
             <tr key={request.id}>
-              <td>{request.url}</td>
-              <td>{JSON.stringify(request.body)}</td>
-              <td>{JSON.stringify(request.headers)}</td>
               <td>{request.method}</td>
+              <td>{request.url}</td>
               <td>{<ExecOptions request={request} />}</td>
               <td>
                 <Button onClick={() => navigate(`/${request.id}`)}>

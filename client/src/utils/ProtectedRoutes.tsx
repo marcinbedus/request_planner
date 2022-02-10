@@ -6,5 +6,6 @@ export const ProtectedRoutes = () => {
   const {
     state: { isAuthenticated },
   } = useUserContext();
+
   return isAuthenticated ? <Outlet /> : <Login />;
 };
