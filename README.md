@@ -18,5 +18,5 @@ Application for planning requests to other services.
 - Prisma
 - Rabbitmq
 - React
-- PassportJs - Google OAuth
+- PassportJs - Github OAuth
 - PostgreSQL 
